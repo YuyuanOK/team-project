@@ -1,0 +1,30 @@
+/* 全局滚动条样式 */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(134, 114, 248, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(134, 114, 248, 0.3);
+}
+
+/* 移除默认的滚动条按钮 */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 滚动条轨道角落 */
+::-webkit-scrollbar-corner {
+  background: transparent;
+} 

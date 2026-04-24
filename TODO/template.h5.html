@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <!-- 允许地理位置访问 -->
+        <meta http-equiv="permissions-policy" content="geolocation=(self 'https://localhost:8080' 'http://localhost:8080'), interest-cohort=()">
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <script>
+            // 全局变量存储位置信息
+            window.userLocation = null;
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+                
+                // 窗口大小变化时重新计算字体大小
+                window.addEventListener('resize', function() {
+                    document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+                });
+                
+                // 提前请求地理位置权限
+                requestLocation();
+            })
+            
+            // 请求位置权限函数
+            function requestLocation() {
+                if (navigator.geolocation) {
+                    console.log('请求地理位置权限...');
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            console.log('地理位置权限获取成功', position);
+                            window.userLocation = {
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude
+                            };
+                            console.log('已保存用户位置到全局变量:', window.userLocation);
+                        },
+                        function(error) {
+                            console.error('地理位置权限获取失败:', error.message, '错误代码:', error.code);
+                            // 错误代码: 1=用户拒绝, 2=位置不可用, 3=超时
+                            if (error.code === 1) {
+                                console.log('用户拒绝了位置访问权限');
+                                alert('获取位置需要您的授权，请允许位置访问以获取当地天气');
+                            }
+                        },
+                        { 
+                            enableHighAccuracy: true, 
+                            timeout: 30000, // 增加超时时间到30秒
+                            maximumAge: 0 
+                        }
+                    );
+                } else {
+                    console.error('浏览器不支持地理定位');
+                }
+            }
+            
+            // 禁止双击缩放
+            document.addEventListener('touchstart', function (event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+            
+            // 禁止双指缩放
+            document.addEventListener('gesturestart', function (event) {
+                event.preventDefault();
+            }, { passive: false });
+            
+            // 禁止鼠标滚轮缩放
+            document.addEventListener('wheel', function(e) {
+                if(e.ctrlKey) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // 监听CSS媒体查询变化以适应不同设备
+            window.matchMedia('(max-width: 480px)').addListener(function(e) {
+                if(e.matches) {
+                    console.log('小屏幕模式');
+                } else {
+                    console.log('大屏幕模式');
+                }
+            });
+            
+            // 全局错误处理
+            window.addEventListener('error', function(e) {
+                console.error('全局错误:', e.message, e.filename, e.lineno);
+            });
+        </script>
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            #app {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+        <link rel="stylesheet" href="<%= BASE_URL %>static/index.<%= VUE_APP_INDEX_CSS_HASH %>.css" />
+    </head>
+    <body>
+        <noscript>
+            <strong>Please enable JavaScript to continue.</strong>
+        </noscript>
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+    </body>
+</html> 

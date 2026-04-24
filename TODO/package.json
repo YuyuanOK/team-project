@@ -1,0 +1,28 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "这是一个使用uni-app框架开发的简单TODO清单应用，适合大二学生学习和理解移动应用开发。",
+  "main": "main.js",
+  "scripts": {
+    "dev": "uni -p app",
+    "dev:h5": "npx @dcloudio/cli uni -p h5",
+    "build": "uni build",
+    "build:app": "uni build -p app",
+    "build:h5": "npx @dcloudio/cli uni build -p h5"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dcloudio/uni-ui": "^1.5.7"
+  },
+  "devDependencies": {
+    "@dcloudio/uni-app": "",
+    "@dcloudio/uni-app-plus": "",
+    "@dcloudio/uni-h5": "",
+    "@dcloudio/uni-mp-weixin": "",
+    "@dcloudio/vue-cli-plugin-uni": "",
+    "vue": "~2.6.11",
+    "vue-template-compiler": "~2.6.11"
+  }
+}
