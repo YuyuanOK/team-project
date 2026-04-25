@@ -1,0 +1,78 @@
+{
+    "name" : "TODO清单",
+    "appid" : "",
+    "description" : "一个简单高效的TODO清单应用，帮助你管理日常任务",
+    "versionName" : "1.0.0",
+    "versionCode" : "100",
+    "transformPx" : false,
+    "app-plus" : {
+        "usingComponents" : true,
+        "nvueCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        "modules" : {
+            "Geolocation" : {}
+        },
+        "distribute" : {
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>"
+                ]
+            },
+            "ios" : {
+                "privacyDescription" : {
+                    "NSLocationWhenInUseUsageDescription" : "获取位置以提供当前位置的天气信息"
+                }
+            }
+        }
+    },
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "获取位置以提供当前位置的天气信息"
+            }
+        }
+    },
+    "h5" : {
+        "router" : {
+            "mode" : "hash",
+            "base" : "/"
+        },
+        "title" : "TODO清单",
+        "template" : "template.h5.html",
+        "devServer" : {
+            "proxy" : {
+                "/api/weather" : {
+                    "target" : "https://restapi.amap.com",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/api/weather" : ""
+                    }
+                },
+                "/api/quote" : {
+                    "target" : "https://v1.hitokoto.cn",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/api/quote" : ""
+                    }
+                }
+            }
+        }
+    }
+}
